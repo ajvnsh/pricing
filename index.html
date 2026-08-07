@@ -138,6 +138,10 @@
   table.feature-table td:first-child, table.feature-table th:first-child{
     text-align:left; font-family:var(--font-body); font-size:13px; color:var(--gray-80); width:34%;
   }
+  .row-desc{
+    font-family:var(--font-body); font-size:11.5px; color:var(--gray-50); font-weight:400;
+    margin-top:3px; line-height:1.4;
+  }
   table.feature-table tr.group-row td{
     background:var(--gray-10); font-family:var(--font-body); font-weight:600; text-align:left;
     color:var(--blue-80); font-size:12px; text-transform:uppercase; letter-spacing:.04em;
@@ -382,6 +386,7 @@ const PRODUCTS = [
         cta: null
       }
     ],
+    featureGroups: []
   },
 
   // ---------------------------------------------------------
@@ -632,9 +637,10 @@ PRODUCTS.forEach((p, idx) => {
   groups.forEach(g => {
     if (g.title) html += `<tr class="group-row"><td colspan="${colCount + 1}">${g.title}</td></tr>`;
     g.rows.forEach(row => {
-      const [label, values] = row;
+      const [label, values, desc] = row;
       const labelHTML = label ? label : skelLine('60%', '10px');
-      html += `<tr><td>${labelHTML}</td>${values.map(v => `<td>${cellHTMLFixed(v)}</td>`).join('')}</tr>`;
+      const descHTML = desc ? `<div class="row-desc">${desc}</div>` : '';
+      html += `<tr><td>${labelHTML}${descHTML}</td>${values.map(v => `<td>${cellHTMLFixed(v)}</td>`).join('')}</tr>`;
     });
   });
   html += '</tbody></table></div>';
