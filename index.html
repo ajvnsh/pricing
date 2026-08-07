@@ -46,14 +46,14 @@
     font-family:var(--font-body); font-weight:500; font-size:13.5px;
     border:1px solid var(--gray-30); background:var(--white); color:var(--gray-80);
     padding:9px 16px; border-radius:100px; cursor:pointer; white-space:nowrap;
-    transition:all .15s ease;
+    transition:all .15s ease; text-decoration:none; display:inline-block;
   }
   .tab:hover{border-color:var(--blue-40); color:var(--blue-70);}
   .tab.active{background:var(--blue-100); border-color:var(--blue-100); color:var(--white);}
 
   /* ---------- Main ---------- */
   main{max-width:1120px; margin:0 auto; padding:40px 24px 100px;}
-  .product-panel{display:none;}
+  .product-panel{display:none; scroll-margin-top:80px;}
   .product-panel.active{display:block; animation:fade .25s ease;}
   @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
 
@@ -62,6 +62,11 @@
   .product-head p.tagline{font-size:15px; color:var(--gray-70); margin:0; max-width:640px; line-height:1.5;}
   .source-note{font-family:var(--font-mono); font-size:11.5px; color:var(--gray-50); margin-top:10px;}
   .source-note a{color:var(--blue-70); text-decoration:none;}
+  .anchor-note{font-family:var(--font-mono); font-size:11px; color:var(--gray-40); margin-top:4px;}
+  .anchor-note button{
+    font-family:var(--font-mono); font-size:11px; color:var(--blue-70); background:none; border:none;
+    padding:0; cursor:pointer; text-decoration:underline;
+  }
 
   /* ---------- Skeleton (content-pending) primitives ---------- */
   @keyframes pulse{0%,100%{opacity:.5} 50%{opacity:.95}}
@@ -641,22 +646,27 @@ function renderEngagement(steps){
    BUILD PAGE
    ============================================================ */
 PRODUCTS.forEach((p, idx) => {
-  const tab = document.createElement('button');
+  const tab = document.createElement('a');
   tab.className = 'tab' + (idx === 0 ? ' active' : '');
   tab.textContent = p.name;
+  tab.href = '#' + p.id;
   tab.dataset.id = p.id;
-  tab.addEventListener('click', () => selectProduct(p.id));
+  tab.addEventListener('click', (e) => {
+    e.preventDefault();
+    selectProduct(p.id, true);
+  });
   tabbar.appendChild(tab);
 
   const panel = document.createElement('section');
   panel.className = 'product-panel' + (idx === 0 ? ' active' : '');
-  panel.id = 'panel-' + p.id;
+  panel.id = p.id;
 
   let html = `
     <div class="product-head">
       <h2>${p.name}</h2>
       <p class="tagline">${p.tagline}</p>
       ${p.source ? `<div class="source-note">Source: ${p.source.url ? `<a href="${p.source.url}" target="_blank" rel="noopener">${p.source.label}</a>` : p.source.label}</div>` : ''}
+      <div class="anchor-note">Direct link: <button type="button" class="copy-link" data-id="${p.id}">#${p.id}</button></div>
     </div>
   `;
 
@@ -688,10 +698,38 @@ PRODUCTS.forEach((p, idx) => {
   main.appendChild(panel);
 });
 
-function selectProduct(id){
+function selectProduct(id, updateHash){
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.id === id));
-  document.querySelectorAll('.product-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  document.querySelectorAll('.product-panel').forEach(p => p.classList.toggle('active', p.id === id));
+  if (updateHash && history.pushState) {
+    history.pushState(null, '', '#' + id);
+  }
 }
+
+/* Copy-link buttons next to each product heading */
+main.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-link');
+  if (!btn) return;
+  const url = window.location.href.split('#')[0] + '#' + btn.dataset.id;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1200);
+    });
+  }
+});
+
+/* Open the product matching the URL hash on load, and respond to
+   back/forward navigation or a hash typed/pasted directly. */
+function openFromHash(){
+  const id = window.location.hash.replace('#', '');
+  if (id && PRODUCTS.some(p => p.id === id)) {
+    selectProduct(id, false);
+  }
+}
+window.addEventListener('hashchange', openFromHash);
+openFromHash();
 </script>
 
 </body>
