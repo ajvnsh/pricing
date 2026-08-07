@@ -376,14 +376,14 @@ const PRODUCTS = [
     source: { label: "Varnish CDN in a Box — Partner Program deck", url: null },
     tiers: [
       {
-        name: "Varnish CDN in a Box", badge: "Paid", price: "Runs on your own PoPs, under your own brand, sold to your own customers.", period: "no fixed license fee",
-        desc: "Varnish CDN in a Box gives telcos, hosting providers, and managed service providers a white-label, turn-key CDN service running directly on their own infrastructure.",
+        name: "Varnish CDN in a Box", badge: "", price: "Revenue share", period: "no fixed license fee",
+        desc: "Runs on your own PoPs, under your own brand, sold to your own customers.",
         bullets: [
           "Small minimum commitment fee", "Revenue share, not license fees", "Partner owns the customer relationship",
           "Operate it yourself, or hand 24/7 ops to Varnish",
           { sub: "Ideal for" }, "Telcos & ISPs", "Infrastructure & hosting providers", "Managed service providers"
         ],
-        cta: cta: { label: "Contact sales", style: "ghost", href: "#" }
+        cta: null
       }
     ],
     featureGroups: []
@@ -627,23 +627,26 @@ PRODUCTS.forEach((p, idx) => {
     html += renderEngagement(p.engagementModel);
   }
 
-  const groups = getFeatureGroups(p);
-  const headers = p.twoColHeaders || p.tiers.map(t => t.name);
-  const colCount = headers.length;
+  const hasFeatures = p.featureGroups && p.featureGroups.length > 0;
+  if (hasFeatures) {
+    const groups = p.featureGroups;
+    const headers = p.twoColHeaders || p.tiers.map(t => t.name);
+    const colCount = headers.length;
 
-  html += `<div class="compare"><h4>Feature comparison</h4><table class="feature-table"><thead><tr><th>Feature</th>${
-    headers.map(h => `<th>${thText(h)}</th>`).join('')
-  }</tr></thead><tbody>`;
-  groups.forEach(g => {
-    if (g.title) html += `<tr class="group-row"><td colspan="${colCount + 1}">${g.title}</td></tr>`;
-    g.rows.forEach(row => {
-      const [label, values, desc] = row;
-      const labelHTML = label ? label : skelLine('60%', '10px');
-      const descHTML = desc ? `<div class="row-desc">${desc}</div>` : '';
-      html += `<tr><td>${labelHTML}${descHTML}</td>${values.map(v => `<td>${cellHTMLFixed(v)}</td>`).join('')}</tr>`;
+    html += `<div class="compare"><h4>Feature comparison</h4><table class="feature-table"><thead><tr><th>Feature</th>${
+      headers.map(h => `<th>${thText(h)}</th>`).join('')
+    }</tr></thead><tbody>`;
+    groups.forEach(g => {
+      if (g.title) html += `<tr class="group-row"><td colspan="${colCount + 1}">${g.title}</td></tr>`;
+      g.rows.forEach(row => {
+        const [label, values, desc] = row;
+        const labelHTML = label ? label : skelLine('60%', '10px');
+        const descHTML = desc ? `<div class="row-desc">${desc}</div>` : '';
+        html += `<tr><td>${labelHTML}${descHTML}</td>${values.map(v => `<td>${cellHTMLFixed(v)}</td>`).join('')}</tr>`;
+      });
     });
-  });
-  html += '</tbody></table></div>';
+    html += '</tbody></table></div>';
+  }
   if (p.footnote) html += `<div class="footnote">${p.footnote}</div>`;
 
   panel.innerHTML = html;
