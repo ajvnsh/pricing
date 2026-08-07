@@ -370,72 +370,19 @@ const PRODUCTS = [
     name: "Varnish CDN in a Box",
     tagline: "A turn-key CDN service — running on your own PoPs, operated by Varnish.",
     source: { label: "Varnish CDN in a Box — Partner Program deck", url: null },
-    engagementModel: [
-      { n: "1", title: "Discovery", tagline: "Align on PoPs, target customers and ambitions.", bg: "var(--blue-30)", fg: "var(--blue-100)" },
-      { n: "2", title: "Commercial model", tagline: "Agree revenue share, branding and go-to-market.", bg: "var(--blue-50)", fg: "var(--white)" },
-      { n: "3", title: "Pilot", tagline: "Varnish CDN live on your PoPs in weeks.", bg: "var(--blue-70)", fg: "var(--white)" },
-      { n: "4", title: "Launch & scale", tagline: "Joint sales motion; expand footprint; begin handover.", bg: "var(--blue-100)", fg: "var(--white)" },
-    ],
     tiers: [
       {
-        name: "Partner-Led", badge: "", price: "Revenue share", period: "no fixed license fee",
-        desc: "Sold under your brand or co-branded — you own the customer relationship.",
+        name: "Varnish CDN in a Box", badge: "", price: "Revenue share", period: "no fixed license fee",
+        desc: "Runs on your own PoPs, under your own brand, sold to your own customers.",
         bullets: [
           "Small minimum commitment fee", "Revenue share, not license fees", "Partner owns the customer relationship",
           "Operate it yourself, or hand 24/7 ops to Varnish",
           { sub: "Ideal for" }, "Telcos & ISPs", "Infrastructure & hosting providers", "Managed service providers"
         ],
         cta: null
-      },
-      {
-        name: "Direct Sale", badge: "", price: "Revenue share", period: "no fixed license fee",
-        desc: "Runs on your own PoPs, under your own brand, sold to your own customers.",
-        bullets: [
-          "Install straight onto your own infrastructure and network", "Your brand, your customer, your margin",
-          "Operate it yourself, or hand 24/7 ops to Varnish",
-          "Start on your own footprint; add partner PoPs for extra reach"
-        ],
-        cta: null
       }
     ],
-    featureGroups: [
-      { title: "Content delivery", rows: [
-        ["CDN edge, always online", ["yes","yes"]],
-        ["Global GeoIP routing & load balancing", ["yes","yes"]],
-        ["HTTP/2, IPv6, WebSocket proxy", ["yes","yes"]],
-        ["Configurable minimum TTL", ["yes","yes"]],
-        ["Cache invalidation, incl. by tag", ["yes","yes"]],
-      ]},
-      { title: "Customization", rows: [
-        ["Custom cache rules (10 → 2000+)", ["yes","yes"]],
-        ["Manage cookies / headers / query params", ["yes","yes"]],
-        ["True client IP headers", ["yes","yes"]],
-        ["One-click WordPress, Drupal, Magento", ["yes","yes"]],
-      ]},
-      { title: "Image handling", rows: [
-        ["Image optimization", ["yes","yes"]],
-        ["Image transformation", ["yes","yes"]],
-      ]},
-      { title: "Security", rows: [
-        ["Managed WAF (Basic / Standard / Advanced)", ["yes","yes"]],
-        ["Bot verification & protection", ["yes","yes"]],
-        ["DDoS protection (L3 & L4)", ["yes","yes"]],
-        ["Rate limiting, hotlink protection, GeoIP blocklist", ["yes","yes"]],
-        ["Managed SSL, bring-your-own-certificate", ["yes","yes"]],
-      ]},
-      { title: "Compliance", rows: [
-        ["Data sovereignty, avoids US CLOUD Act", ["yes","yes"]],
-        ["NIS2-aligned", ["yes","yes"]],
-        ["ISO 27001, ISO 9001, PCI DSS 4.0 Level 1", ["yes","yes"]],
-      ]},
-      { title: "Dashboard & ops", rows: [
-        ["Code-free dashboard, RBAC, API", ["yes","yes"]],
-        ["Real-time metrics (to 1 min), log export", ["yes","yes"]],
-        ["Operated 24/7 by Varnish", ["addon","addon"]],
-        ["Edge compute", ["addon","addon"]],
-      ]},
-    ],
-    footnote: "Edge compute is launching soon: custom code and functions at the edge, on your own PoPs."
+    featureGroups: []
   },
 
   // ---------------------------------------------------------
