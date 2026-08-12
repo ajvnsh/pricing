@@ -84,7 +84,7 @@
 
   /* ---------- Tier cards ---------- */
   .tiers{
-    display:grid; gap:16px; margin-bottom:44px; align-items:stretch;
+    display:grid; gap:16px; margin-bottom:24px; align-items:stretch;
     grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
   }
   .tier-card{
@@ -126,6 +126,31 @@
   .tier-card ul li.sub-head::before{content:none;}
   .tier-card ul.skel-list li{border-top:none; padding-left:0;}
   .tier-card ul.skel-list li::before{content:none;}
+
+  /* ---------- Partner banner (e.g. CDN in a Box, folded into Varnish CDN) ---------- */
+  .partner-banner{
+    background:var(--blue-70); color:var(--white); border-radius:14px;
+    padding:28px 30px; margin-bottom:44px;
+  }
+  .partner-banner .eyebrow{
+    font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--blue-10); margin-bottom:10px;
+  }
+  .partner-banner h3{font-family:var(--font-head); font-weight:300; font-size:23px; margin:0 0 6px; color:var(--white);}
+  .partner-banner .example-tag{font-family:var(--font-mono); font-size:12px; color:var(--blue-10); margin-bottom:14px;}
+  .partner-banner p.desc{font-size:13.5px; color:var(--blue-10); line-height:1.6; max-width:680px; margin:0 0 22px;}
+  .partner-tracks{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin-bottom:20px;}
+  .partner-track{background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:16px 18px;}
+  .partner-track h4{margin:0 0 6px; font-size:14px; font-weight:600; color:var(--white);}
+  .partner-track p{margin:0; font-size:12.5px; color:var(--blue-10); line-height:1.5;}
+  .partner-features{font-size:12.5px; color:var(--blue-10); margin-bottom:22px; line-height:1.6; max-width:680px;}
+  .partner-features strong{color:var(--white);}
+  .partner-banner .cta-row{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  a.partner-cta{
+    background:var(--white); color:var(--blue-70); font-weight:600; font-size:13.5px;
+    padding:11px 22px; border-radius:8px; text-decoration:none; white-space:nowrap;
+  }
+  a.partner-cta:hover{background:var(--blue-10);}
 
   /* ---------- Comparison table ---------- */
   .compare h4{
@@ -294,6 +319,18 @@ const PRODUCTS = [
       cta: { label: "Contact sales", style: "ghost", href: "#" }
     }
   ],
+  partnerBanner: {
+    eyebrow: "Partner Program",
+    title: "Provide a CDN service to your customers",
+    exampleTag: "Example tagline: “[Your Company] CDN”",
+    desc: "Varnish CDN in a Box — Varnish CDN, deployed on your own infrastructure, on your own PoPs. A partner deal: commercials still TBC, with options like revenue share on the table.",
+    tracks: [
+      { title: "Resell / white-label", body: "Sell Varnish CDN under your own brand to your own customers." },
+      { title: "Private managed CDN", body: "Run a private CDN on your own infrastructure, managed by Varnish." },
+    ],
+    features: "Same features as Varnish CDN, plus partner essentials like SSO, billing, and multi-tenancy — more to come.",
+    cta: { label: "Contact partner team", href: "#" }
+  },
   featureGroups: [
     { title: "Content delivery", rows: [
       ["Number of domains included", ["1","1","Per quote"]],
@@ -359,26 +396,6 @@ const PRODUCTS = [
     ]},
   ],
 },
-  // ---------------------------------------------------------
-  {
-    id: "cdn-in-a-box",
-    name: "Varnish CDN in a Box",
-    tagline: "A turn-key CDN service — running on your own PoPs, operated by Varnish.",
-    source: "https://www.varnish-software.com/products/streaming-content-delivery/varnish-cdn-in-a-box/",
-    tiers: [
-      {
-        name: "Varnish CDN in a Box", badge: "", price: "Revenue share", period: "no fixed license fee",
-        desc: "Runs on your own PoPs, under your own brand, sold to your own customers.",
-        bullets: [
-          "Small minimum commitment fee", "Revenue share, not license fees", "Partner owns the customer relationship",
-          "Operate it yourself, or hand 24/7 ops to Varnish",
-          { sub: "Ideal for" }, "Telcos & ISPs", "Infrastructure & hosting providers", "Managed service providers"
-        ],
-        cta: null
-      }
-    ],
-    featureGroups: []
-  },
 
   // ---------------------------------------------------------
   {
@@ -584,6 +601,22 @@ function renderEngagement(steps){
   `).join('')}</div>`;
 }
 
+function renderPartnerBanner(b){
+  return `<div class="partner-banner">
+    <div class="eyebrow">${b.eyebrow}</div>
+    <h3>${b.title}</h3>
+    <div class="example-tag">${b.exampleTag}</div>
+    <p class="desc">${b.desc}</p>
+    <div class="partner-tracks">
+      ${b.tracks.map(t => `<div class="partner-track"><h4>${t.title}</h4><p>${t.body}</p></div>`).join('')}
+    </div>
+    <div class="partner-features"><strong>Feature set:</strong> ${b.features}</div>
+    <div class="cta-row">
+      <a class="partner-cta" href="${b.cta.href}" target="${b.cta.href !== '#' ? '_blank' : '_self'}" rel="noopener">${b.cta.label}</a>
+    </div>
+  </div>`;
+}
+
 /* ============================================================
    BUILD PAGE
    ============================================================ */
@@ -613,6 +646,10 @@ PRODUCTS.forEach((p, idx) => {
   `;
 
   html += '<div class="tiers">' + p.tiers.map(renderTierCard).join('') + '</div>';
+
+  if (p.partnerBanner) {
+    html += renderPartnerBanner(p.partnerBanner);
+  }
 
   if (p.engagementModel) {
     if (p.processIntro) html += `<p class="lead">${p.processIntro}</p>`;
