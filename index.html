@@ -152,6 +152,10 @@
     padding:11px 22px; border-radius:8px; text-decoration:none; white-space:nowrap;
   }
   a.partner-cta:hover{background:var(--blue-10);}
+  a.partner-source-link{
+    font-family:var(--font-mono); font-size:12px; color:var(--blue-10); text-decoration:none;
+  }
+  a.partner-source-link:hover{color:var(--white);}
 
   /* ---------- Comparison table ---------- */
   .compare h4{
@@ -323,14 +327,15 @@ const PRODUCTS = [
   ],
   partnerBanner: {
     eyebrow: "Partner Program",
-    title: "Provide a CDN service to your customers",
-    exampleTag: "Example tagline: “[Your Company] CDN”",
-    desc: "Varnish CDN in a Box — Varnish CDN, deployed on your own infrastructure, on your own PoPs. A partner deal: commercials still TBC, with options like revenue share on the table.",
+    title: "Deploy Varnish CDN on your own infrastructure",
+    exampleTag: "Varnish CDN in a Box",
+    source: "https://www.varnish-software.com/products/streaming-content-delivery/varnish-cdn-in-a-box/",
+    desc: "Resell CDN services under your brand or gain the benefits of a managed private CDN.",
     tracks: [
-      { title: "Resell / white-label", body: "Sell Varnish CDN under your own brand to your own customers." },
+      { title: "Resell CDN", body: "Sell CDN services to your own customers with a white-label Varnish CDN deployment." },
       { title: "Private managed CDN", body: "Run a private CDN on your own infrastructure, managed by Varnish." },
     ],
-    features: "Same features as Varnish CDN, plus partner essentials like SSO, billing, and multi-tenancy — more to come.",
+    features: "All the capabilities as Varnish CDN, plus partner essentials like SSO, billing, and multi-tenancy.",
     cta: { label: "Contact partner team", href: "#" }
   },
   featureGroups: [
@@ -617,6 +622,7 @@ function renderPartnerBanner(b){
     <div class="partner-features"><strong>Feature set:</strong> ${b.features}</div>
     <div class="cta-row">
       <a class="partner-cta" href="${b.cta.href}" target="${b.cta.href !== '#' ? '_blank' : '_self'}" rel="noopener">${b.cta.label}</a>
+      ${b.source ? `<a class="partner-source-link" href="${b.source}" target="_blank" rel="noopener">Product page →</a>` : ''}
     </div>
   </div>`;
 }
