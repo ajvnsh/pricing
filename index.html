@@ -112,6 +112,7 @@
   .cta.primary:hover{background:var(--blue-60);}
   .cta.ghost{background:var(--white); color:var(--blue-70); border:1px solid var(--blue-40);}
   .cta.ghost:hover{background:var(--blue-10);}
+  .cta.cta-compact{display:inline-block; width:auto; margin-bottom:0; padding:11px 28px;}
   .tier-card ul{list-style:none; margin:0; padding:0; flex-grow:1;}
   .tier-card ul li{
     font-size:13px; color:var(--gray-80); padding:6px 0 6px 20px; position:relative; line-height:1.4;
@@ -183,6 +184,7 @@
     header h1{font-size:32px;}
     .product-head h2{font-size:24px;}
     .engagement{grid-template-columns:1fr !important;}
+    .tiers{max-width:none !important;}
   }
 </style>
 </head>
@@ -190,7 +192,7 @@
 
 <header>
   <h1>Pricing, across every product</h1>
-  <p>One page, every plan.</p>
+  <p>One page, every plan. Pick a product to see its free tier, trial, and paid plans side by side, with a full feature comparison underneath.</p>
 </header>
 
 <div class="tabbar-wrap">
@@ -279,7 +281,7 @@ const PRODUCTS = [
           "Dedicated RAM, CPU & network capacity", "100+ global PoPs on Tier-1 networks", "Zero egress fees",
           "24/7/365 managed ops & NOC support", "Security, edge logic & free edge compute", "Real-time observability & tuning"
         ],
-        cta: { label: "Get indicative pricing", style: "primary", href: "https://orastreaming.com/#contact_us" }
+        cta: { label: "Get indicative pricing", style: "primary", href: "https://orastreaming.com/#contact_us", compact: true }
       }
     ],
     processIntro: "Contact sales, validate with a Proof of Concept, then roll out through a Build-Operate-Transfer engagement — typically 6–12 months to full transfer.",
@@ -321,15 +323,14 @@ const PRODUCTS = [
   ],
   partnerBanner: {
     eyebrow: "Partner Program",
-    title: "Deploy Varnish CDN on your own infrastructure ",
-    exampleTag: "Varnish CDN in a Box",
-    source: "https://www.varnish-software.com/products/streaming-content-delivery/varnish-cdn-in-a-box/",
-    desc: " Resell CDN services under your brand or gain the benefits of a managed private CDN.",
+    title: "Provide a CDN service to your customers",
+    exampleTag: "Example tagline: “[Your Company] CDN”",
+    desc: "Varnish CDN in a Box — Varnish CDN, deployed on your own infrastructure, on your own PoPs. A partner deal: commercials still TBC, with options like revenue share on the table.",
     tracks: [
-      { title: "Resell CDN", body: "Sell CDN services to your own customers with a while-label Varnish CDN deployment." },
+      { title: "Resell / white-label", body: "Sell Varnish CDN under your own brand to your own customers." },
       { title: "Private managed CDN", body: "Run a private CDN on your own infrastructure, managed by Varnish." },
     ],
-    features: "All the capabilities as Varnish CDN, plus partner essentials like SSO, billing, and multi-tenancy.",
+    features: "Same features as Varnish CDN, plus partner essentials like SSO, billing, and multi-tenancy — more to come.",
     cta: { label: "Contact partner team", href: "#" }
   },
   featureGroups: [
@@ -563,7 +564,9 @@ function renderTierCard(t){
     : `<div class="desc">${skelLine('100%', '11px')}<div style="height:6px;"></div>${skelLine('76%', '11px')}</div>`;
 
   const ctaHTML = t.cta
-    ? `<a class="cta ${t.cta.style}" href="${t.cta.href || '#'}" target="${t.cta.href && t.cta.href !== '#' ? '_blank' : '_self'}" rel="noopener">${t.cta.label}</a>`
+    ? (t.cta.compact
+        ? `<div style="margin-bottom:18px;"><a class="cta cta-compact ${t.cta.style}" href="${t.cta.href || '#'}" target="${t.cta.href && t.cta.href !== '#' ? '_blank' : '_self'}" rel="noopener">${t.cta.label}</a></div>`
+        : `<a class="cta ${t.cta.style}" href="${t.cta.href || '#'}" target="${t.cta.href && t.cta.href !== '#' ? '_blank' : '_self'}" rel="noopener">${t.cta.label}</a>`)
     : `<div class="cta" style="padding:0;margin-bottom:18px;">${skelLine('100%', '38px')}</div>`;
 
   let bulletsHTML;
@@ -646,7 +649,8 @@ PRODUCTS.forEach((p, idx) => {
     </div>
   `;
 
-  html += '<div class="tiers">' + p.tiers.map(renderTierCard).join('') + '</div>';
+  const tiersStyle = p.tiers.length === 1 ? ' style="max-width:calc(50% - 8px);"' : '';
+  html += `<div class="tiers"${tiersStyle}>` + p.tiers.map(renderTierCard).join('') + '</div>';
 
   if (p.partnerBanner) {
     html += renderPartnerBanner(p.partnerBanner);
