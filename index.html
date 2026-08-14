@@ -510,8 +510,18 @@ const PRODUCTS = [
         bullets: ["Community support via Discord, Reddit, Stack Overflow", "No licence required"],
         cta: { label: "Get Varnish Cache", style: "ghost", href: "https://www.varnish-software.com/resources/support-community/open-source/" }
       },
-      { name: "Gateway API", badge: "free", price: "$0", period: "always free", desc: "Kubernetes-native HTTP routing, powered by Varnish", bullets: ["Passes the Gateway API conformance test suite", "Zero VCL generation for routing", "Built-in dashboard"], cta: { label: "Get Varnish Gateway", style: "ghost", href: "https://gateway.varnish.org/" },
-      { name: "TinyKVM", badge: "free", price: "$0", period: "always free", desc: "", bullets: [], cta: null },
+      {
+        name: "Gateway API", badge: "free", price: "$0", period: "always free",
+        desc: "A Kubernetes Gateway API implementation, backed by Varnish Cache.",
+        bullets: ["Conformance-tested against the Gateway API test suite", "Routing tables update in milliseconds — no VCL compile", "Built-in real-time dashboard"],
+        cta: { label: "Get Varnish Gateway", style: "ghost", href: "https://gateway.varnish.org/" }
+      },
+      {
+        name: "TinyKVM", badge: "free", price: "$0", period: "GPL-3.0, dual-licensed",
+        desc: "A slim userspace emulator library for native-performance sandboxing, built on KVM.",
+        bullets: ["Runs regular Linux programs at native speed", "Execution timeouts and memory limits for safe sandboxing", "Forks a program into hundreds of pre-initialized VMs"],
+        cta: { label: "View on GitHub", style: "ghost", href: "https://github.com/varnish/tinykvm" }
+      },
     ],
     featureGroups: []
   },
