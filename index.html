@@ -271,7 +271,7 @@ const PRODUCTS = [
     twoColHeaders: ["Free", "Premium"],
   },
 
-  // ---------------------------------------------------------
+ // ---------------------------------------------------------
   {
     id: "ora-streaming",
     name: "Ora Streaming",
@@ -280,7 +280,7 @@ const PRODUCTS = [
     tiers: [
       {
         name: "Managed Deployment", badge: "Custom pricing", price: "Contact sales", period: "quoted per deployment", featured: true,
-        desc: "Dedicated capacity sized to your traffic, priced individually.",
+        desc: "Runs entirely on Varnish's own network — hardware, PoPs and operations included.",
         bullets: [
           "Dedicated RAM, CPU & network capacity", "100+ global PoPs on Tier-1 networks", "Zero egress fees",
           "24/7/365 managed ops & NOC support", "Security, edge logic & free edge compute", "Real-time observability & tuning"
@@ -288,17 +288,22 @@ const PRODUCTS = [
         cta: { label: "Get indicative pricing", style: "primary", href: "https://orastreaming.com/#contact_us", compact: true }
       }
     ],
-    processIntro: "Contact sales, validate with a Proof of Concept, then roll out through a Build-Operate-Transfer engagement — typically 6–12 months to full transfer.",
-    engagementModel: [
-      { n: "1", title: "Contact sales", tagline: "Share your traffic profile.", bg: "var(--gray-10)", fg: "var(--blue-100)" },
-      { n: "2", title: "Proof of Concept", tagline: "Validate performance first.", bg: "var(--blue-30)", fg: "var(--blue-100)" },
-      { n: "3", title: "Build", tagline: "Speed and risk mitigation.", bg: "var(--lime-50)", fg: "var(--blue-100)" },
-      { n: "4", title: "Operate", tagline: "Stabilize and optimize.", bg: "var(--blue-60)", fg: "var(--white)" },
-      { n: "5", title: "Transfer", tagline: "Upskill and hand over.", bg: "var(--blue-100)", fg: "var(--white)" },
-    ],
+    partnerBanner: {
+      eyebrow: "Deployment Option",
+      title: "Prefer to deploy on your own infrastructure?",
+      desc: "Build-Operate-Transfer lets you run Ora on your own hardware and network. Varnish builds it and operates it while your team trains alongside, then hands over full ownership.",
+      tracks: [
+        { title: "Build", body: "Varnish stands up the platform on your infrastructure." },
+        { title: "Operate", body: "Varnish runs it while your team trains alongside." },
+        { title: "Transfer", body: "Full handover once your team is ready." },
+      ],
+      featuresLabel: "Timeline:",
+      features: "Typically 6–12 months from kickoff to full transfer, depending on your team's pace.",
+      cta: { label: "Talk to us about Build-Operate-Transfer", href: "https://orastreaming.com/#contact_us" }
+    },
     featureGroups: []
   },
-
+ 
 // ---------------------------------------------------------
 {
   id: "cdn",
